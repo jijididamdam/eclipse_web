@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="all.css">
+</head>
+<style>
+    #joinTable{
+        margin: 100px;
+        height: 300px;
+        text-align: center;
+        background-color:darksalmon;
+    }
+
+    #joinTable tr{
+        
+        margin-bottom: 100px;
+    }
+    .putText{
+        text-align: left;
+    }
+    section{
+        margin-top: 150px;   
+    }
+</style>
+<body>
+    <div id="main">
+        <header>
+            <a href="Main.html"><img src="icon.png" width="70"></a>
+            <h1 id="title">Toy Shop</h1>       
+            <form action="search" method="get">
+                <div id="search">
+                    <span>search</span>
+                    <span class="sch"><input type="text" style="background-color:rgb(221, 248, 250); width: 90px;" name="what"></span>
+                    <button type="summit"><img src="돋보기.png" height="12" width="10"></button>
+                </div>
+            </form>
+            <form action="login" method="post">
+                <div id="loginMain">
+                    <table>
+                        <tr>
+                            <td><b> 아이디 </b></td>
+                            <td><input type="text" style="width: 100px;" name="id"></td>
+                        </tr>
+                        <tr>
+                            <td><b>비밀번호</b></td>
+                            <td><input type="text" style="width: 100px;" name="pwd"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="loginChk.html">
+                                    <input type="button" style="margin-left: 25px;" value="로그인">
+                                </a>
+                            </td>
+                            <td>
+                                <a href="join.html">
+                                    <input type="button" style="margin-left: 20px;" value="회원가입">
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </header>
+
+        <section>
+            <form action="join" method="post" id="form">
+                <table border="1" id="joinTable">
+                    <tr>
+                        <td>아이디</td>
+                        <td class="putText">
+                            <input type="text" id="id"> 8~10자의 영문 대소문자와 숫자 1개 이상 필수 포함 입력
+                        </td>
+                        <td><input type="button" value="아이디 유효성" onclick="chkId()"></td>
+                    </tr>
+                    <tr>
+                        <td>비밀번호</td>
+                        <td colspan="2" class="putText">
+                            <input type="password" id="pwd" onchange="chkPwd()"> 
+                            8~10자의 영문 대소문자와 특수문자 1개 이상 필수 포함 입력
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>전화번호</td>
+                        <td colspan="2" class="putText">
+                            <input type="text" id="tel" value="010" onkeyup="chkTel()" style="width: 100px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <input type="button" id="join" value="회원가입">
+                            <input type="reset" value="초기화">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </section>
+</body>
+<script>
+    const regExp =/^(?=.*[a-zA-z])(?=.*[0-9]).{8,10}$/;
+    const regPwd =/^(?=.*[a-zA-z])(?=.*[$`~!@$!%.*#;:/'"^?&\\(\\)\-_=+]).{8,10}$/;
+    var chkFlag=false;
+    function chkId(){
+        let idText = document.getElementById('id').value;
+        if(idText.match(regExp)){
+            alert('사용가능');
+            chkFlag=true;
+        } else{
+            alert('사용불가능');
+            document.getElementById('id').text(" ");
+        }
+    }
+    chkPwd=() => {
+        let pwdText = document.getElementById('pwd').value;
+        if(pwdText.match(regPwd)){
+            alert('사용가능');
+            
+        } else{
+            alert('사용불가능');
+        }
+    }
+    /*
+    function chkTel(){
+        let telText = document.getElementById('tel').value;
+        if(/^[0-1]{3}-[0-9]{4}-[0-9]{4}/.test(telText)){
+            alert('사용가능');
+            
+        } else{
+            alert('사용불가능');
+        }
+    }
+    */
+   
+    document.getElementById('tel').addEventListener('keyup',function(e){
+        var number = document.getElementById('tel');
+        number.value = chkTel(number.value);
+    });
+    
+    function chkTel(telText){
+        telText = document.getElementById('tel').value;
+        telText = telText.replace(/\D/g,''); // 문자 입력 불가
+        telText = telText.substring(0,11); 
+        let size = telText.length;
+          
+        if(size<=3){
+            telText=telText;
+        }else if(size<4&&(/^[0-1]{3}/.test(telText))){
+            telText = telText+'-';
+        }else if(size < 8 &&(/^[0-1]{3}[0-9]{4}/.test(telText))){
+            telText = telText.substring(0,3)+'-'+telText.substring(3,7);
+        }else if(/^[0-1]{3}[0-9]{4}[0-9]{4}/.test(telText)){
+            telText = telText.substring(0,3)+'-'+telText.substring(3,7)+'-'+telText.substring(7,11)
+        }
+        return telText;
+    }
+
+    document.getElementById('join').onclick=() => {
+        let idText = document.getElementById('id').value;
+        let pwdText = document.getElementById('pwd').value;
+        let telText = document.getElementById('tel').value;
+        if(/^[0-1]{3}-[0-9]{4}-[0-9]{4}/.test(telText)){
+            if(idText==""){
+                alert('아이디를 입력해주세요')
+            } else if(pwdText==""){
+                alert('비밀번호를 입력해주세요')
+            } else if(chkFlag==false){
+                alert('아이디 유효성 검사를 해주세요')
+            } else if(chkFlag==true){
+                alert('회원가입을 축하합니다.')
+                document.getElementById('form').submit();
+            }
+        } else {
+            alert('전화번호 형식이 올바르지 않습니다.')
+        }
+    }
+</script>
+</html>

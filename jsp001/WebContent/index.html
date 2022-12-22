@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>DOM 그리고 DOM을 선택하여</h1>
+    <h1 id="h1main">자바스크립트에서 제어하기</h1>
+    <hr>
+    검색어<input type="text" id="sword"><input type="button" id="idbtn" value="검색">
+    <ul>
+        <li class="change">첫번째</li>
+        <li class="change">두번째</li>
+        <li class="change">세번째</li>
+    </ul>
+    
+    <div>
+        <ul>
+            <li class="change">첫번째</li>
+            <li class="change">두번째</li>
+            <li class="change">세번째</li>
+        </ul>
+    </div>
+    <a href="Board?id=abc&pass=okok">Test</a>
+    <form action="Board" method="get">
+    	<input type="text" name="id">
+    	<input type="password" name="pass">
+    	<input type="submit" name="로그인">
+    </form>
+    
+</body>
+<script>
+    // 목적 : 자바스크립트에서 제어하기 글자를 바꿈 > 오늘 날씨 좋음 으로 변경
+   /* var aa = document.getElementsByTagName('h1');    //aa가 배열형식으로 가져옴 ~ 태그는 중복될 가능성이 많기에
+    aa[1].innerText='오늘날씨';
+    aa[0].innerHTML='<span>오늘날씨<span>'    // 텍스트가 오늘 날씨로 들어감
+    aa[1].innerText='<span>오늘날씨<span>'    // 텍스트가 <span>오늘날씨<span> 로 들어감
+    */
+   document.getElementById("h1main").onclick = function() {
+    alert("AAA");
+   }
+   document.getElementById("sword").onchange = () => {
+    var a = document.getElementById("sword").value;
+    var h1 = document.querySelector('#h1main');
+    if(a == ''){
+        alert('입력하세요');
+    } else {
+        h1.innerHTML = a;
+    }
+   }
+</script>
+</html>
